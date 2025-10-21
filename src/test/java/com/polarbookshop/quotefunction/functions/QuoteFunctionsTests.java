@@ -3,10 +3,13 @@ package com.polarbookshop.quotefunction.functions;
 import com.polarbookshop.quotefunction.domain.Genre;
 import com.polarbookshop.quotefunction.domain.Quote;
 import com.polarbookshop.quotefunction.domain.QuoteService;
+import com.polarbookshop.quotefunction.repository.InMemoryQuoteRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -21,10 +24,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@Import({InMemoryQuoteRepository.class, QuoteService.class})
 class QuoteFunctionsTests {
 
-    @Mock
-    private QuoteService quoteService;
+    @MockitoBean(enforceOverride = true)
+    QuoteService quoteService;
 
     private final QuoteFunctions functions = new QuoteFunctions();
 
