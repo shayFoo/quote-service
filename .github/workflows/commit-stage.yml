@@ -42,10 +42,28 @@ jobs:
         with:
           directory: k8s/all.yaml
           fail-on-invalid-resource: true
+  native:
+    name: "Native Image Build and Test"
+    needs: [ "build" ]
+    runs-on: "ubuntu-24.04"
+    permissions:
+      contents: read
+    steps:
+      - name: "Checkout source code"
+        uses: actions/checkout@v5
+      - name: "Set up GraalVM"
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: "25"
+          distribution: "graalvm"
+      - name: "Run native image tests"
+        run: |
+          chmod +x gradlew
+          ./gradlew nativeTest
   package:
     name: "Package and Publish"
     if: "${{ github.ref == 'refs/heads/main'}}"
-    needs: [ "build" ]
+    needs: [ "build", "native" ]
     runs-on: ubuntu-24.04
     permissions:
       contents: read

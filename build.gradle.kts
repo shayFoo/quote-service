@@ -31,6 +31,9 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+//
+    // https://mvnrepository.com/artifact/org.graalvm.buildtools/graalvm-reachability-metadata
+    runtimeOnly("org.graalvm.buildtools:graalvm-reachability-metadata:0.11.2")
 }
 
 dependencyManagement {
