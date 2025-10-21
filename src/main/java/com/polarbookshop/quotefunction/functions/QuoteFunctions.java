@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 @Configuration
 public class QuoteFunctions {
     private static final Logger log = LoggerFactory.getLogger(QuoteFunctions.class);
+
     @Bean
     Supplier<Flux<Quote>> allQuotes(QuoteService quoteService) {
         return () -> {
@@ -36,7 +37,7 @@ public class QuoteFunctions {
     }
 
     @Bean
-    Function<Genre, Mono<Quote>> randomQuoteByGenre(QuoteService quoteService) {
+    Function<Genre, Mono<Quote>> genreQuote(QuoteService quoteService) {
         return genre -> {
             log.info("Fetching a random quote for genre: {}", genre);
             return quoteService.getRandomQuoteByGenre(genre);
